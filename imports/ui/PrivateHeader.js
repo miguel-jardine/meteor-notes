@@ -8,7 +8,7 @@ import { createContainer } from "meteor/react-meteor-data";
 //      - Does not need to manipulate state
 //      - Does not need to make database calls.
 // --------------------------------------------------
-export const PrivateHeader = props => {
+export const PrivateHeader = (props) => {
 // --------------------------------------------------
     return (
         <div className="header">
@@ -17,7 +17,7 @@ export const PrivateHeader = props => {
                 <button className="button button--link-text" onClick={props.onLogout}>Logout</button>
             </div>
         </div>
-    )
+    );
 }
 
 // --------------------------------------------------
@@ -35,9 +35,7 @@ PrivateHeader.protoTypes = {
 }
 
 export default createContainer(() => {
-    // debugger;
     return {
-        // title: props.title || "Run Away, Bitch!",
         onLogout: onLogout
     }
 }, PrivateHeader);

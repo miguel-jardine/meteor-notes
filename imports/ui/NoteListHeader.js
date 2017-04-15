@@ -2,24 +2,24 @@ import { createContainer } from "meteor/react-meteor-data";
 import { Meteor } from 'meteor/meteor';
 import React from "react";
 
-export class NoteListHeader extends React.Component {
-    constructor (props) {
-        super(props);
-    }
+
+// Presentational Component (aka Stateless Functional Component)
+//      - Faster than a React.Component
+//      - Does not need to manipulate state
+//      - Does not need to make database calls.
+// --------------------------------------------------
+export const NoteListHeader = (props) => {
+// --------------------------------------------------
+    return (
+        <div>
+            <button onClick={() => { handleClick(props) }}>Create Note</button>
+        </div>
+    );
+}
 
 
-    render () {
-        return (
-            <div>
-                <button onClick={this.onClick.bind(this)}>Create Note</button>
-            </div>
-        );
-    }    
-
-    onClick (e) {
-        this.props.meteorCall("notes.insert");
-
-    }
+const handleClick = (props) => {  
+    props.meteorCall("notes.insert");
 }
 
 
