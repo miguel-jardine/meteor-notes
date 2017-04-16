@@ -3,24 +3,8 @@ import { Meteor } from "meteor/meteor";
 import { mount } from "enzyme";
 import React from "react";
 
+import { notes } from "../fixtures/fixtures";
 import { NoteList } from "./NoteList";
-
-const notes = [
-    {
-        _id: "testNoteId1",
-        title: "testTitle1",
-        body: "testBody1",
-        userId: "testUserId1",
-        updatedAt: 0
-    },
-    {
-        _id: "testNoteId2",
-        title: "testTitle2",
-        body: "testBody2",
-        userId: "testUserId1",
-        updatedAt: 0
-    },
-];
 
 if (Meteor.isClient) {
     describe("NoteList", function () {

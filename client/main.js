@@ -1,3 +1,4 @@
+import { browserHistory } from "react-router";
 import React from "react";
 import ReactDOM from "react-dom";
 import { Session } from "meteor/session";
@@ -12,6 +13,15 @@ Tracker.autorun(() => {
   onAuthChange(isAuthenticated);
 });
 
+Tracker.autorun(() => {
+  const selectedNoteId = Session.get("selectedNoteId");
+
+  if (selectedNoteId) {
+    browserHistory.replace(`/dashboard/${selectedNoteId}`);
+  }
+});
+
 Meteor.startup(() => {
+  Session.set("selectedNoteId", undefined);
   ReactDOM.render(routes, document.getElementById("app"));
 });

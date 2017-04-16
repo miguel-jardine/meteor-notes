@@ -4,60 +4,45 @@ import moment from "moment";
 import { mount } from "enzyme";
 import React from "react";
 
+import { notes } from "../fixtures/fixtures";
 import { NoteListItem } from "./NoteListItem";
 
 if (Meteor.isClient) {
     describe("NoteListItem", function () {
+        let Session;
+
+        beforeEach(() => {
+            Session = {
+                set: expect.createSpy()
+            };
+        });
+
         it("should show note title and date", function () {
-            const title = "Test Title";
-            const updatedAt = moment().valueOf();
-            const note = { title, updatedAt };
-            const wrapper = mount(<NoteListItem note={note}/>);
+            const wrapper = mount(<NoteListItem note={notes[0]} Session={Session}/>);
 
             let h5Text = wrapper.find("h5").text();
-            expect(h5Text).toBe(title);
+            expect(h5Text).toBe("testTitle1");
 
             pText = wrapper.find("p").text();
-            expect(pText).toBe(moment(updatedAt).format("M/DD/YY H:mm a")); 
+            expect(pText).toBe("4/15/17 16:14 pm"); 
         });
 
 
         it("should show the default title when none is given", function () {
-            const title = "Untitled Note";
-            const wrapper = mount(<NoteListItem note={{}}/>);
+            const wrapper = mount(<NoteListItem note={notes[1]} Session={Session}/>);
 
             let h5Text = wrapper.find("h5").text();
-            expect(h5Text).toBe(title);
+            expect(h5Text).toBe("Untitled Note");
         });
 
 
-        // it("should call NoteListItemWithPassword with the form data", function () {
-        //     const email = "j@j.com";
-        //     const password = "password123";
-        //     const spy = expect.createSpy();
-        //     const wrapper = mount(<NoteListItem NoteListItemWithPassword={spy}/>);
+        it("should call set on click", function () {
+            const wrapper = mount(<NoteListItem note={notes[1]} Session={Session}/>);
 
-        //     wrapper.ref("email").node.value = email;
-        //     wrapper.ref("password").node.value = password;
-        //     wrapper.find("form").simulate("submit");
-
-        //     expect(spy.calls[0].arguments[0]).toBe(email);
-        //     expect(spy.calls[0].arguments[1]).toBe(password);
-        // });
-
-
-        // it("should set NoteListItemWithPassword callback errors", function () {
-        //     const spy = expect.createSpy();
-        //     const wrapper = mount(<NoteListItem NoteListItemWithPassword={spy}/>);
-
-        //     wrapper.find("form").simulate("submit");
-
-        //     spy.calls[0].arguments[2]({});
-        //     expect(wrapper.state("error").length).toNotBe(0);
-
-        //     spy.calls[0].arguments[2]();
-        //     expect(wrapper.state("error").length).toBe(0);
-        // });
-
+            let divContainer = wrapper.find("div");
+            divContainer.simulate("click");
+            expect(Session.set).toHaveBeenCalledWith("selectedNoteId", notes[1]._id);
+            
+        });
     });
 }
