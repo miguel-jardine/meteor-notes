@@ -1,5 +1,6 @@
 import React from "react";
 
+import Editor from "./Editor"
 import PrivateHeader from "./PrivateHeader";
 import NoteList from "./NoteList"
 
@@ -18,6 +19,7 @@ export default () => {
             <div className="page-content">
                 <NoteList/>
             </div>
+            <Editor/>
         </div>
     );
 }

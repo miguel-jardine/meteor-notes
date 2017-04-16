@@ -23,7 +23,7 @@ if (Meteor.isClient) {
             let h5Text = wrapper.find("h5").text();
             expect(h5Text).toBe("testTitle1");
 
-            pText = wrapper.find("p").text();
+            pText = wrapper.find("#timestamp").text();
             expect(pText).toBe("4/15/17 16:14 pm"); 
         });
 

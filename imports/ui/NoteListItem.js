@@ -9,7 +9,7 @@ export const NoteListItem = (props) => {
         <div onClick={ () => { handleClick(props) }}>
             <h5>{ props.note.title || "Untitled Note" }</h5>
             <p>{ props.note.selected ? "selected" : undefined }</p>
-            <p>{ moment(props.note.updatedAt).format("M/DD/YY H:mm a") }</p>
+            <p id="timestamp">{ moment(props.note.updatedAt).format("M/DD/YY H:mm a") }</p>
         </div>
     )
 }

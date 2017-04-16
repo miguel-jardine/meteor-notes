@@ -31,7 +31,7 @@ NoteList.propType = {
 }
 
 
-export default createContainer(() => {
+export default createContainer(() => { 
     const selectedNoteId = Session.get("selectedNoteId");
     Meteor.subscribe("notes");
 
