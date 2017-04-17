@@ -1,6 +1,7 @@
 import { createContainer } from "meteor/react-meteor-data";
 import { Meteor } from 'meteor/meteor';
 import React from "react";
+import { Session } from "meteor/session";
 
 
 // Presentational Component (aka Stateless Functional Component)
@@ -19,17 +20,23 @@ export const NoteListHeader = (props) => {
 
 
 const handleClick = (props) => {  
-    props.meteorCall("notes.insert");
+    props.meteorCall("notes.insert", (err, res) => {
+        if (res) {
+            props.Session.set("selectedNoteId", res);
+        }
+    });
 }
 
 
 NoteListHeader.propType = {
-    meteorCall: React.PropTypes.func.isRequired
+    meteorCall: React.PropTypes.func.isRequired,
+    Session: React.PropTypes.object.isRequired
 }
 
 
 export default createContainer(() => {
     return {
-        meteorCall: Meteor.call
+        meteorCall: Meteor.call,
+        Session
     };
 }, NoteListHeader);

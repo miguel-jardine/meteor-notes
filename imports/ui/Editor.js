@@ -47,7 +47,7 @@ export class Editor extends React.Component {
             });
         }
     }
-    // componentDidMount()
+
 
     render() {
         if (this.props.note) {
