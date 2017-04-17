@@ -19,6 +19,7 @@ export default () => {
             <div className="page-content">
                 <NoteList/>
             </div>
+            <Editor/>
         </div>
     );
 }
