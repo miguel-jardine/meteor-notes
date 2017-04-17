@@ -1,3 +1,4 @@
+import { browserHistory } from "react-router";
 import { createContainer } from "meteor/react-meteor-data";
 import { Meteor } from "meteor/meteor";
 import { Session } from "meteor/session";
@@ -29,18 +30,23 @@ export class Editor extends React.Component {
     }
 
 
-    handleClick(e) {
-
+    handleRemoval(e) {
+        this.props.call("notes.remove", this.props.note._id);
+        this.props.browserHistory.push("/dashboard");
     }
 
-    // componentDidUpdate (prevProps, prevState) {
-    //     if (this.props.note) {
-    //         this.setState({
-    //             title: this.props.note.title,
-    //             body: this.props.note.body
-    //         });
-    //     }
-    // }
+
+    componentDidUpdate (prevProps, prevState) {
+        const currentNoteId = this.props.note ? this.props.note._id : undefined;
+        const lastNoteId = prevProps.note ? prevProps.note._id : undefined;
+
+        if (currentNoteId && currentNoteId !== lastNoteId) {
+            this.setState({
+                title: this.props.note.title,
+                body: this.props.note.body
+            });
+        }
+    }
     // componentDidMount()
 
     render() {
@@ -48,17 +54,17 @@ export class Editor extends React.Component {
             return (
                 <div>
                     {this.props.note._id}
-                    <div>
+                    <div id="editor">
                         <input type="text" name="title" placeholder="Note title" value={this.state.title} onChange={this.handleTitleChange.bind(this)} />
                         <textarea name="editor" cols="30" rows="10" placeholder="Type your note here." value={this.state.body} onChange={this.handleBodyChange.bind(this)} ></textarea>
-                        <button onClick={this.handleClick}>Delete Note</button>
+                        <button onClick={this.handleRemoval.bind(this)}>Delete Note</button>
                     </div>
                 </div>
             );
         } else {
             return (
                 <div>
-                    <p>{this.props.note ? "Note not found." : "Pick or create a note to get started."}</p>
+                    <p id="message">{this.props.selectedNoteId ? "Note not found." : "Pick or create a note to get started."}</p>
                 </div>
             );
         }
@@ -67,6 +73,7 @@ export class Editor extends React.Component {
 
 
 Editor.propTypes = {
+    browserHistory: React.PropTypes.object.isRequired,
     call: React.PropTypes.func.isRequired,
     note: React.PropTypes.object,
     selectedNoteId: React.PropTypes.string
@@ -79,6 +86,7 @@ export default createContainer(() => {
     // Meteor.subscribe("notes");
 
     return {
+        browserHistory: browserHistory,
         call: Meteor.call,
         note: Notes.findOne(selectedNoteId),
         selectedNoteId,
