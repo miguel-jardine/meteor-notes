@@ -52,7 +52,7 @@ export class Editor extends React.Component {
     render() {
         if (this.props.note) {
             return (
-                <div>
+                <div className="editor">
                     {this.props.note._id}
                     <div id="editor">
                         <input type="text" name="title" placeholder="Note title" value={this.state.title} onChange={this.handleTitleChange.bind(this)} />
@@ -63,7 +63,7 @@ export class Editor extends React.Component {
             );
         } else {
             return (
-                <div>
+                <div className="editor">
                     <p id="message">{this.props.selectedNoteId ? "Note not found." : "Pick or create a note to get started."}</p>
                 </div>
             );

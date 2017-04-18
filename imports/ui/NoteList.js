@@ -10,7 +10,7 @@ import NoteListEmptyItem from "./NoteListEmptyItem";
 
 export const NoteList = (props) => {
     return (
-        <div>
+        <div className="item-list">
             <NoteListHeader/>
             { !!props.notes.length ? renderNoteList(props.notes) : <NoteListEmptyItem/> }
             NoteList { props.notes.length }
