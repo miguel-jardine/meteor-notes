@@ -11,8 +11,8 @@ import React from "react";
 // export default () => {
 export const NoteListEmptyItem = () => {
     return (
-        <div>
-            Empty note.
+        <div className="empty-item" >
+            Create a note to get started.
         </div>
     );
 }

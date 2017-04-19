@@ -5,11 +5,11 @@ import { Session } from "meteor/session";
 
 
 export const NoteListItem = (props) => {
+    const className = props.note.selected ? "item item--selected" : "item";
     return (
-        <div onClick={ () => { handleClick(props) }}>
-            <h5>{ props.note.title || "Untitled Note" }</h5>
-            <p>{ props.note.selected ? "selected" : undefined }</p>
-            <p id="timestamp">{ moment(props.note.updatedAt).format("M/DD/YY H:mm a") }</p>
+        <div className={className} onClick={ () => { handleClick(props) }}>
+            <h5 className="item__title" >{ props.note.title || "Untitled Note" }</h5>
+            <p className="item__subtitle" id="timestamp">{ moment(props.note.updatedAt).format("M/DD/YY H:mm a") }</p>
         </div>
     )
 }

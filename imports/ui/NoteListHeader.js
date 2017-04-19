@@ -12,8 +12,8 @@ import { Session } from "meteor/session";
 export const NoteListHeader = (props) => {
 // --------------------------------------------------
     return (
-        <div>
-            <button onClick={() => { handleClick(props) }}>Create Note</button>
+        <div className="item-list__header" >
+            <button className="button" onClick={() => { handleClick(props) }}>Create Note</button>
         </div>
     );
 }
