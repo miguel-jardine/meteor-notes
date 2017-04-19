@@ -1,7 +1,9 @@
-import React from "react";
 import { browserHistory } from "react-router";
-import { Meteor } from "meteor/meteor";
 import { createContainer } from "meteor/react-meteor-data";
+import { Meteor } from "meteor/meteor";
+import React from "react";
+import { Session } from "meteor/session";
+
 
 // Presentational Component (aka Stateless Functional Component)
 //      - Faster than a React.Component
@@ -10,9 +12,11 @@ import { createContainer } from "meteor/react-meteor-data";
 // --------------------------------------------------
 export const PrivateHeader = (props) => {
 // --------------------------------------------------
+    const navImgSrc = props.isNavOpen ? "/images/x.svg" : "/images/bars.svg";
     return (
         <div className="header">
             <div className="header__content">
+                <img className="header__nav-toggle" src={navImgSrc} onClick={props.handleNavIconClick} alt="Open navigation menu"/>
                 <h1 className="header__title">{props.title}</h1>
                 <button className="button button--link-text" onClick={props.onLogout}>Logout</button>
             </div>
@@ -29,13 +33,23 @@ const onLogout = () => {
 }
 
 
+const handleNavIconClick = (e) => {
+    const currentStatus = Session.get("isNavOpen");
+    Session.set("isNavOpen", !currentStatus);
+}
+
+
 PrivateHeader.protoTypes = {
     title: React.PropTypes.string.isRequired,
-    onLogout: React.PropTypes.func.isRequired
+    onLogout: React.PropTypes.func.isRequired,
+    isNavOpen: React.PropTypes.bool.isRequired,
+    handleNavIconClick: React.PropTypes.func.isRequired,
 }
 
 export default createContainer(() => {
     return {
-        onLogout: onLogout
+        onLogout: onLogout,
+        isNavOpen: Session.get("isNavOpen"),
+        handleNavIconClick: () => Session.set("isNavOpen", !Session.get("isNavOpen")),
     }
 }, PrivateHeader);

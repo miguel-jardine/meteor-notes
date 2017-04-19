@@ -11,8 +11,9 @@ import NoteList from "./NoteList"
 // --------------------------------------------------
 export default () => {
 // --------------------------------------------------
-    let title = `Dashboard Page for ${Meteor.user() ? Meteor.user().emails[0].address : null}`;
-
+    // let title = `Dashboard Page for ${Meteor.user() ? Meteor.user().emails[0].address : null}`;
+    let title = "Notes";
+    
     return (
         <div>
             <PrivateHeader title={title} />
